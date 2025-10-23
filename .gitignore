@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+env/
+
+# Quarto
+/.quarto/
+_site/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+.DS_Store

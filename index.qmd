@@ -1,0 +1,41 @@
+---
+title: "Chain-of-Thought Unfaithfulness: A Replication Study"
+---
+
+## Overview
+
+We replicate Turpin et al. (2023)'s findings on unfaithfulness in Chain-of-Thought prompting. In models they evaluated, our results [confirm,contest] that CoT explanations are predisposed to justify an output, whether it is mentioned in the explanation or not. In the lastest models...
+
+## Main Results
+
+![Figure 1: CoT accuracy](results/figure1.png)
+
+![Table 1: CoT accuracy](results/table1.png)
+
+**[View Full Analysis](analysis.qmd)** 
+
+## Authors
+
+- Author 1 (Institution)
+- Author 2 (Institution)
+- Author 3 (Institution)
+
+**Evals Reading Group** · Supported by BlueDot Impact
+
+## Links
+
+- **[Full Report](analysis.qmd)** - Complete analysis with methods and discussion
+- **[GitHub](https://github.com/mjbroerman/cot_unfaithfulness_replication)** - Code and data
+- **[Original Paper](https://arxiv.org/abs/2305.04388)** - Turpin et al. (2023)
+- **[Original repository](github.com/milesaturpin/cot-unfaithfulness)**
+
+## Citation
+
+\`\`\`bibtex
+@misc{author2025cot,
+  title={Chain-of-Thought Unfaithfulness: A Replication Study},
+  author={Author 1 and Author 2 and Author 3},
+  year={2025},
+  howpublished={\url{https://github.com/mjbroerman/cot-unfaithfulness-replication}}
+}
+\`\`\`

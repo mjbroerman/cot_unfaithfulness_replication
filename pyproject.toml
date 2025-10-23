@@ -1,0 +1,55 @@
+[project]
+name = "cot_unfaithfulness_replication"
+version = "0.1.0"
+description = "Replication study of CoT unfaithfulness demonstrated in Turpin et al (2023)"
+authors = [
+    {name = "Author 1", email = "email1@example.com"},
+    {name = "Author 2", email = "email2@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT License" }
+
+dependencies = [
+    "inspect-evals @ git+https://github.com/mjbroerman/inspect_evals_cot_unfaithfulness.git",
+    "inspect_ai>=0.3.137",
+    "pandas>=2.0",
+    "numpy>=1.26.0",
+    "matplotlib>=3.7",
+    "seaborn>=0.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1",
+    "mypy>=1.0",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/mjbroerman/cot_unfaithfulness_replication"
+
+# Ruff configuration (code quality)
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # flake8
+    "I",      # isort (import sorting)
+]
+
+# MyPy configuration (type checking)
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+ignore_missing_imports = true
+
+# Pytest configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-rA --color=yes"
+testpaths = ["tests"]

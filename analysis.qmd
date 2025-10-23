@@ -1,0 +1,179 @@
+---
+title: "Chain-of-Thought Unfaithfulness: A Replication Study"
+author:
+  - Author 1
+  - Author 2
+  - Author 3
+format:
+  html:
+    toc: true
+    code-fold: true
+    fig-width: 10
+    fig-height: 4
+bibliography: references.bib
+execute:
+  echo: true
+  warning: false
+---
+
+## Abstract
+
+\[Brief abstract describing the replication study\]
+
+## Introduction
+
+Chain-of-Thought (CoT) prompting has been shown to improve reasoning in large language models. However, several studies question whether explanations are faithful representations of the model's reasoning process. This study replicates early unfaithfulness results [@turpin] with , extends their findings to recent models and updated datasets [@suzgun, @kazemi] and expands their analysis to resamples of reasoning.
+
+## Methodology
+
+### Experimental Design
+
+Following @turpin, we used a subset of BigBench-Hard and full set of BiasBenchmarkQA, the latter augmented with evidence from @turpin. Our evaluation systematically varies:
+
+-   **Prompting strategy**: Zero-shot vs. Few-shot
+-   **CoT usage**: No-CoT vs. CoT
+-   **Context bias**: Unbiased vs. Biased (toward incorrect answers)
+
+### Implementation
+
+We implement the evaluation using Inspect [@aisecurityinstitute2024] and contribute the implementation to the `inspect_evals` repository. All experimental code is available in our fork at \[github link\].
+
+### Models Evaluated
+
+-   GPT-3.5 (OpenAI)
+-   Claude 3.5 Sonnet (Anthropic)
+-   \[Additional models as appropriate\]
+
+## Results
+
+```{python}
+#| label: load-data
+#| output: false
+
+from pathlib import Path
+from inspect_ai.log import read_eval_log
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set style for publication-quality figures
+sns.set_theme(style="whitegrid", context="paper", font_scale=1.2)
+
+# Load all evaluation logs
+log_dir = Path("logs/full_experiments")
+log_files = list(log_dir.glob("*.eval"))
+logs = [read_eval_log(str(f)) for f in log_files]
+
+# Extract and organize results
+# TODO: Implement data processing to extract:
+# - accuracy by model
+# - accuracy by prompting setting (zero-shot/few-shot)
+# - accuracy by CoT usage (no-cot/cot)
+# - accuracy by context type (unbiased/biased)
+
+print(f"Loaded {len(logs)} evaluation logs")
+```
+
+```{python}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics across all experimental conditions"
+
+# TODO: Create summary table
+# Should show mean accuracy and standard deviation for each:
+# - Model
+# - Setting (zero-shot suggested, few-shot suggested, few-shot always A)
+# - CoT condition
+# - Bias condition
+
+summary_data = {
+    'Model': ['GPT-3.5', 'Claude 3.5'],
+    'Unbiased Accuracy': [0.0, 0.0],  # Placeholder
+    'Biased Accuracy': [0.0, 0.0],     # Placeholder
+    'Unfaithfulness Gap': [0.0, 0.0],  # Placeholder
+}
+
+summary_df = pd.DataFrame(summary_data)
+summary_df
+```
+
+```{python}
+#| label: fig-main-results
+#| fig-cap: "Accuracy micro-averaged across BBH tasks (i.e., weighting by task sample size). The accuracy of CoT drops significantly when biasing models toward incorrect answers. This means CoT exhibits a large degree of systematic unfaithfulness since CoT explanations do not mention the biasing feature that influences their prediction. CoT decreases sensitivity to biases relative to No-CoT in the few-shot setting, but in the zero-shot setting, it hurts more than it helps."
+
+# TODO: Implement full figure with actual data
+# This should create a 2x3 grid matching the paper's Figure 1
+
+fig, axes = plt.subplots(1, 6, figsize=(18, 4), sharey=True)
+
+models = ['GPT-3.5', 'Claude 3.5']
+settings = [
+    'Zero-shot\n(Suggested Answer)',
+    'Few-shot\n(Suggested Answer)',
+    'Few-shot\n(Answer is Always A)'
+]
+
+for idx, model in enumerate(models):
+    for jdx, setting in enumerate(settings):
+        ax = axes[idx * 3 + jdx]
+        
+        # Placeholder bars
+        x = [0, 1]
+        # TODO: Replace with actual data extraction
+        no_cot_unbiased = 60
+        no_cot_biased = 40
+        cot_unbiased = 60
+        cot_biased = 35
+        
+        width = 0.35
+        ax.bar(x[0] - width/2, no_cot_unbiased, width, 
+               label='Unbiased Context', color='#5B9BD5')
+        ax.bar(x[0] + width/2, no_cot_biased, width, 
+               label='Biased Context', color='#ED7D31')
+        ax.bar(x[1] - width/2, cot_unbiased, width, color='#5B9BD5')
+        ax.bar(x[1] + width/2, cot_biased, width, color='#ED7D31')
+        
+        # Calculate and annotate delta
+        delta = cot_biased - cot_unbiased
+        ax.text(1, max(cot_unbiased, cot_biased) + 5, f'{delta:.1f}', 
+                ha='center', fontweight='bold', fontsize=10)
+        
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(['No-CoT', 'CoT'])
+        ax.set_ylim(0, 100)
+        
+        if idx == 0 and jdx == 0:
+            ax.set_ylabel('Accuracy')
+            ax.legend(loc='upper left', frameon=False, fontsize=9)
+        
+        if idx == 0:
+            ax.set_title(setting, fontsize=10)
+        
+        if jdx == 1:
+            ax.text(0.5, 0.95, model, transform=ax.transAxes,
+                   ha='center', va='top', fontweight='bold', fontsize=11)
+
+plt.tight_layout()
+plt.show()
+```
+
+## Extensions
+
+\[Results from additional models, prompting strategies, or analyses beyond the original paper\]
+
+## Limitations
+
+\[Discussion of any differences from original study, implementation limitations, and generalization constraints\]
+
+## Discussion
+
+\[Interpretation of results in context of original paper and broader literature on CoT faithfulness\]
+
+## Conclusion
+
+\[Summary of main findings and implications\]
+
+## References
+
+::: {#refs}
+:::
