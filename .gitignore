@@ -9,6 +9,7 @@ env/
 # Quarto
 /.quarto/
 _site/
+_freeze/
 
 # Environment variables
 .env

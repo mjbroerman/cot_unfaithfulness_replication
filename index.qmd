@@ -8,9 +8,9 @@ We replicate Turpin et al. (2023)'s findings on unfaithfulness in Chain-of-Thoug
 
 ## Main Results
 
-![Figure 1: CoT accuracy](results/figure1.png)
+<!-- ![Figure 1: CoT accuracy](results/figure1.png) -->
 
-![Table 1: CoT accuracy](results/table1.png)
+<!-- ![Table 1: CoT accuracy](results/table1.png) -->
 
 **[View Full Analysis](analysis.qmd)** 
 
@@ -31,11 +31,11 @@ We replicate Turpin et al. (2023)'s findings on unfaithfulness in Chain-of-Thoug
 
 ## Citation
 
-\`\`\`bibtex
+```
 @misc{author2025cot,
   title={Chain-of-Thought Unfaithfulness: A Replication Study},
   author={Author 1 and Author 2 and Author 3},
   year={2025},
   howpublished={\url{https://github.com/mjbroerman/cot-unfaithfulness-replication}}
 }
-\`\`\`
+```

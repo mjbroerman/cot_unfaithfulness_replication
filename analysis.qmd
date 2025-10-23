@@ -49,6 +49,7 @@ We implement the evaluation using Inspect [@aisecurityinstitute2024] and contrib
 ```{python}
 #| label: load-data
 #| output: false
+#| eval: false
 
 from pathlib import Path
 from inspect_ai.log import read_eval_log
@@ -78,6 +79,7 @@ print(f"Loaded {len(logs)} evaluation logs")
 ```{python}
 #| label: tbl-summary
 #| tbl-cap: "Summary statistics across all experimental conditions"
+#| eval: false
 
 # TODO: Create summary table
 # Should show mean accuracy and standard deviation for each:
@@ -100,6 +102,7 @@ summary_df
 ```{python}
 #| label: fig-main-results
 #| fig-cap: "Accuracy micro-averaged across BBH tasks (i.e., weighting by task sample size). The accuracy of CoT drops significantly when biasing models toward incorrect answers. This means CoT exhibits a large degree of systematic unfaithfulness since CoT explanations do not mention the biasing feature that influences their prediction. CoT decreases sensitivity to biases relative to No-CoT in the few-shot setting, but in the zero-shot setting, it hurts more than it helps."
+#| eval: false
 
 # TODO: Implement full figure with actual data
 # This should create a 2x3 grid matching the paper's Figure 1
