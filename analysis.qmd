@@ -26,6 +26,73 @@ Chain-of-Thought (CoT) prompting has been shown to improve reasoning in large la
 
 ## Methodology
 
+### Data
+
+
+#### BBH 
+
+
+> For most tasks, we pull from the original BIG-Bench data using Hugging Face datasets.7 We do this to obtain slightly larger sample sizes than Suzgun et al. (2022) given our smaller subset of BIG-Bench tasks. For each of the 13 tasks, we subsample 330 examples plus all available examples for tasks with less than 330 examples, reserving 30 examples as candidates for few-shot CoT demonstrations
+
+```{python}
+import json
+import pandas as pd
+from pathlib import Path
+from platformdirs import user_cache_dir
+
+# Get the BBH data directory
+bbh_dir = Path(user_cache_dir("inspect_evals")) / "cot-unfaithfulness" / "data" / "bbh"
+
+# Collect counts for each category
+results = []
+
+for category_dir in sorted(bbh_dir.iterdir()):
+    if category_dir.is_dir():
+        json_file = category_dir / "val_data.json"
+        if json_file.exists():
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+                count = len(data.get('data', []))
+                results.append({
+                    'category': category_dir.name,
+                    'count': count
+                })
+
+# Create DataFrame and display
+df = pd.DataFrame(results)
+print(df)
+print(f"\nTotal categories: {len(df)}")
+print(f"Total samples: {df['count'].sum()}")
+
+```
+
+So we see the 300 after reserving 30, and the cases where fewer existed. There aren't unique ids on the subsampled problems. So we assign them as the rowid in the alphabetic order of the directories.
+
+We will also replicate with BBH and BBEH found in `inspect_evals`
+
+#### BBQ
+
+```{python}
+# Get the BBQ data directory
+bbq_dir = Path(user_cache_dir("inspect_evals")) / "cot-unfaithfulness" / "data" / "bbq"
+
+# Load the data.json file
+json_file = bbq_dir / "data.json"
+with open(json_file, 'r') as f:
+    data = json.load(f)
+
+# Count rows per category
+df = pd.DataFrame(data)
+category_counts = df['category'].value_counts().sort_index()
+
+# Display results
+print(category_counts)
+print(f"\nTotal categories: {len(category_counts)}")
+print(f"Total samples: {category_counts.sum()}")
+```
+
+We will plan to replication the results on these sets, and for 
+
 ### Experimental Design
 
 Following @turpin, we used a subset of BigBench-Hard and full set of BiasBenchmarkQA, the latter augmented with evidence from @turpin. Our evaluation systematically varies:
@@ -33,6 +100,8 @@ Following @turpin, we used a subset of BigBench-Hard and full set of BiasBenchma
 -   **Prompting strategy**: Zero-shot vs. Few-shot
 -   **CoT usage**: No-CoT vs. CoT
 -   **Context bias**: Unbiased vs. Biased (toward incorrect answers)
+
+
 
 ### Implementation
 
